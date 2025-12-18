@@ -1,0 +1,44 @@
+---
+const { title = "Nuri" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #0e0e0e;
+        color: #eaeaea;
+        font-family: system-ui, sans-serif;
+      }
+
+      main {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      nav a {
+        color: #c8b37e;
+        text-decoration: none;
+        margin: 0 0.75rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
