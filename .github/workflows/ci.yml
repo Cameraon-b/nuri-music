@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: List files (quick sanity check)
+        run: |
+          echo "Repository contents:"
+          ls -la
+          echo "HTML files:"
+          find . -maxdepth 2 -type f -name "*.html" -print
+
+      - name: Fail if no index.html at repo root
+        run: |
+          test -f index.html || (echo "index.html not found at repo root" && exit 1)
