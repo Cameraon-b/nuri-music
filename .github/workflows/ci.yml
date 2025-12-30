@@ -5,14 +5,12 @@ on:
     branches: ["master", "main"]
   pull_request:
 
-permissions:
-  contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -20,21 +18,23 @@ jobs:
           node-version: "20"
           cache: "npm"
 
-      - name: Install
+      - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build site
         run: npm run build
 
-      - name: Validate site structure
+      - name: Validate build output
         run: |
-          if [ ! -f index.astro ]; then
-            echo "index.astro missing"
+          if [ ! -f dist/index.html ]; then
+            echo "dist/index.html missing (build failed or output dir differs)"
+            echo "Contents of dist:"
+            ls -la dist || true
             exit 1
           fi
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: site-dist
+          name: astro-dist
           path: dist
