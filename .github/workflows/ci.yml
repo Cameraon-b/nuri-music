@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: ["master"]
+    branches: ["master", "main"]
   pull_request:
 
 permissions:
@@ -25,6 +25,13 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Validate site structure
+        run: |
+          if [ ! -f index.html ]; then
+            echo "index.html missing"
+            exit 1
+          fi
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
