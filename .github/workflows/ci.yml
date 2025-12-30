@@ -28,8 +28,8 @@ jobs:
 
       - name: Validate site structure
         run: |
-          if [ ! -f index.html ]; then
-            echo "index.html missing"
+          if [ ! -f index.astro ]; then
+            echo "index.astro missing"
             exit 1
           fi
 
